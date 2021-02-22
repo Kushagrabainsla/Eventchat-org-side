@@ -1,0 +1,35 @@
+.header {
+  position: sticky;
+  top: 0;
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  z-index: 100;
+  /* margin: 1%; */
+}
+
+.header__image {
+  margin-left: 3%;
+  border-radius: 5px;
+  height: 50%;
+}
+
+.header__logo {
+  height: 500%;
+  width: 30%;
+  object-fit: contain;
+  margin-top: 2%;
+}
+
+.signout_button {
+  margin-top: 1%;
+  transform: scale(1.6);
+  margin-right: 5%;
+  color: #4267b2;
+}
+
+img[src=""] {
+  display: none;
+}
