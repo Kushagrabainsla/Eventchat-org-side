@@ -2,7 +2,9 @@ import React, {useRef} from 'react';
 import {db} from '../Firebase.js';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import './EventRoom.css';
-// import Sound from 'react-sound';
+
+// import AudioPlayer from 'react-h5-audio-player';
+// import 'react-h5-audio-player/lib/styles.css';
 
 function EventRoom() {
     const dummy = useRef();
@@ -28,18 +30,15 @@ function ChatMessage(props) {
         <div className='atendee_info'>
             <text>{displayName}</text>
             <text>{email}</text>
-            {/* <Sound
-                url={blob_URL}
-                playStatus={Sound.status.PLAYING}
-                playFromPosition={300}
-                onLoading={this.handleSongLoading}
-                onPlaying={this.handleSongPlaying}
-                onFinishedPlaying={this.handleSongFinishedPlaying}
-            /> */}
-            <p>{blob_URL}</p>
+
+            <audio controls autoplay>
+              <source src={blob_URL} type="audio/mpeg"/>
+            </audio>
+
         </div>
       </div>
     )
 }
+
 
 export default EventRoom
