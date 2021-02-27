@@ -2,9 +2,7 @@ import React, {useRef} from 'react';
 import {db} from '../Firebase.js';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import './EventRoom.css';
-
-// import AudioPlayer from 'react-h5-audio-player';
-// import 'react-h5-audio-player/lib/styles.css';
+import firebase from 'firebase';
 
 function EventRoom() {
     const dummy = useRef();
@@ -23,22 +21,34 @@ function EventRoom() {
 }
 
 function ChatMessage(props) {
-    const { displayName, email, blob_URL, photoURL} = props.message;
+  
+    const { displayName, email, blob_URL, photoURL, uid} = props.message;
+
+    function play_audio () {
+      console.log(blob_URL, uid);
+      const path = 'audios/'.concat(uid, '.mp3');
+      var storageRef = firebase.storage().ref(path);
+      console.log('audio played') 
+      // Getting error on playing this audio.
+      storageRef.getDownloadURL().then((url) => {
+        console.log(url);
+        var audio = new Audio(url);
+        audio.play();
+      })
+    }
     return (
       <div className='audio_message'>
         <img alt='' src={photoURL} className='atendee_image'/>
         <div className='atendee_info'>
-            <text>{displayName}</text>
-            <text>{email}</text>
-
-            <audio controls autoplay>
-              <source src={blob_URL} type="audio/mpeg"/>
-            </audio>
+            <p>{displayName}</p>
+            <p>{email}</p>
+            <p onClick={play_audio}>{uid}</p>
 
         </div>
       </div>
     )
 }
+
 
 
 export default EventRoom
