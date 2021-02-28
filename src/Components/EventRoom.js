@@ -3,6 +3,8 @@ import {db} from '../Firebase.js';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import './EventRoom.css';
 import firebase from 'firebase';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 
 function EventRoom() {
     const dummy = useRef();
@@ -22,18 +24,19 @@ function EventRoom() {
 
 function ChatMessage(props) {
   
-    const { displayName, email, blob_URL, photoURL, uid} = props.message;
+    const { displayName, email, photoURL, uid } = props.message;
 
     function play_audio () {
-      console.log(blob_URL, uid);
       const path = 'audios/'.concat(uid, '.mp3');
       var storageRef = firebase.storage().ref(path);
-      console.log('audio played') 
-      // Getting error on playing this audio.
       storageRef.getDownloadURL().then((url) => {
         console.log(url);
-        var audio = new Audio(url);
-        audio.play();
+        <AudioPlayer
+          autoPlay
+          src={url}
+          onPlay={e => console.log("onPlay")}
+        />
+        console.log('audio played') 
       })
     }
     return (
@@ -43,7 +46,6 @@ function ChatMessage(props) {
             <p>{displayName}</p>
             <p>{email}</p>
             <p onClick={play_audio}>{uid}</p>
-
         </div>
       </div>
     )
