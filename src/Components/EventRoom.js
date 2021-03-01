@@ -3,8 +3,8 @@ import {db} from '../Firebase.js';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import './EventRoom.css';
 import firebase from 'firebase';
-import AudioPlayer from 'react-h5-audio-player';
-import 'react-h5-audio-player/lib/styles.css';
+// import AudioPlayer from 'react-h5-audio-player';
+// import 'react-h5-audio-player/lib/styles.css';
 
 function EventRoom() {
     const dummy = useRef();
@@ -24,19 +24,19 @@ function EventRoom() {
 
 function ChatMessage(props) {
   
-    const { displayName, email, photoURL, uid } = props.message;
+    const { displayName, email, blob_URL, photoURL, uid } = props.message;
 
     function play_audio () {
+      // console.log(blob_URL);
+
       const path = 'audios/'.concat(uid, '.mp3');
       var storageRef = firebase.storage().ref(path);
       storageRef.getDownloadURL().then((url) => {
         console.log(url);
-        <AudioPlayer
-          autoPlay
-          src={url}
-          onPlay={e => console.log("onPlay")}
-        />
-        console.log('audio played') 
+        var audio = new Audio(url);
+        // audio.crossOrigin = 'anonymous';
+        audio.play();
+
       })
     }
     return (
